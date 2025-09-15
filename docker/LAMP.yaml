@@ -1,0 +1,31 @@
+services:
+  server:
+    image: httpd:2.4.65-trixie
+    container_name: phenom_apache2
+    ports:
+    - "80:80"
+    volumes:
+    - ./.data/apache2:/usr/local/apache2/htdocs
+
+  mysql:
+    image: mysql:latest
+    container_name: phenom_mysql
+    ports:
+    - "3306:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASS}
+    volumes:
+    - ./.data/db:/var/lib/mysql
+    - ./.data/custom:/custom
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phenom_phpmyadmin
+    ports:
+    - "93:80"
+    environment:
+    - PMA_HOST=${MYSQL_HOST}
+    depends_on:
+    - ${MYSQL_HOST}
+    volumes:
+    - ./themes:/var/www/html/themes
