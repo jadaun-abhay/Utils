@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:bookworm
+    container_name: postgres
+    environment:
+      POSTGRES_DB: base
+      POSTGRES_USER: phenom
+      POSTGRES_PASSWORD: JSX@2004
+    volumes:
+    - ./.db:/db
+    ports:
+    - "5432:5432"
+    networks:
+    - postgres_db
+
+  dev_pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: jadaunabhaysingh220@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: jadaun
+    ports:
+    - "90:80"
+    networks:
+    - postgres_db
+
+networks:
+  postgres_db:
+    name: dev_postgres_db
