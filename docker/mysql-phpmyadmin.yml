@@ -1,0 +1,31 @@
+services:
+  mysql:
+    image: mysql:oracle
+    container_name: mysql
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: JSX@2004
+    volumes:
+    - ${HOME}/docker-volumes/mysql/data:/var/lib/mysql
+    - ${HOME}/docker-volumes/mysql/dump:/db
+    networks:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+    - "81:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: JSX@2004
+    volumes:
+      - ${HOME}/docker-volumes/phpmyadmin/themes:/var/www/html/themes/
+    networks:
+      - db
+
+networks:
+  db:
+    name: mysql_db
+
